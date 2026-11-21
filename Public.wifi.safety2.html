@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Public Wi-Fi Safety | Nikunj Kumar Lodhi</title>
+  <style>
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { margin: 0; padding: 16px; background: #0b1220; color: #f1f5f9; line-height: 1.5; }
+    .container { max-width: 1020px; margin: auto; }
+    .header { background: #1e293b; border: 1px solid #38bdf8; border-radius: 10px; padding: 16px; margin-bottom: 14px; }
+    .header h1 { margin: 0 0 6px; color: #38bdf8; font-size: 24px; }
+    .meta { font-size: 13px; color: #cbd5e1; }
+    .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    .tab-btn { padding: 8px 14px; border: 1px solid #334155; background: #1e293b; color: #e2e8f0; border-radius: 6px; cursor: pointer; }
+    .tab-btn.active { background: #38bdf8; color: #0b1220; font-weight: bold; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .box { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 16px; margin-bottom: 14px; }
+    .box h2 { margin: 0 0 10px; color: #38bdf8; font-size: 18px; }
+    .box h3 { margin: 12px 0 6px; color: #a78bfa; font-size: 15px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+    label { display: block; margin: 10px 0 4px; font-size: 14px; color: #cbd5e1; }
+    input[type="text"], select { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: #fff; }
+    .checks label { display: flex; align-items: center; gap: 8px; margin: 6px 0; cursor: pointer; }
+    .action-btn { margin-top: 12px; padding: 9px 14px; border: none; border-radius: 6px; background: #38bdf8; color: #0b1220; font-weight: bold; cursor: pointer; }
+    .secondary-btn { margin-top: 12px; padding: 9px 12px; border: 1px solid #475569; border-radius: 6px; background: #0f172a; color: #fff; cursor: pointer; }
+    .preset-btn { padding: 6px 10px; margin: 4px 4px 0 0; border: 1px solid #38bdf8; background: #0f172a; color: #38bdf8; border-radius: 5px; cursor: pointer; font-size: 12px; }
+    .score-box { text-align: center; background: #0f172a; padding: 14px; border-radius: 8px; margin-bottom: 10px; }
+    #scoreText { font-size: 30px; font-weight: bold; color: #38bdf8; }
+    ul, ol { padding-left: 20px; margin: 6px 0; }
+    li { margin-bottom: 6px; font-size: 14px; }
+    pre { background: #0f172a; padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 13px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Public Wi-Fi Safety</h1>
+    <p style="margin:0 0 8px;">Individual Project Workspace &amp; Risk Evaluation Tool (Safe Lab Simulation Mode)</p>
+    <div class="meta">
+      <strong>Student Name:</strong> Nikunj Kumar Lodhi | <strong>Roll Number:</strong> 2026b02310083 | <strong>Branch / Section:</strong> ELCE 2<br>
+      <strong>Email:</strong> nikunj.26b02310083@abes.ac.in | <strong>Career Shaper Username:</strong> nikunj.26b02310083@abes.ac.in<br>
+      <strong>Trainer / Faculty:</strong> Mr.Pushpraj | <strong>Submission Date:</strong> 20/11/2026
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button type="button" class="tab-btn active" data-tab="tool">Safety Analyzer Tool</button>
+    <button type="button" class="tab-btn" data-tab="about">Project Overview &amp; Design</button>
+    <button type="button" class="tab-btn" data-tab="readme">Submission &amp; README</button>
+  </div>
+
+  <!-- TAB 1: ANALYZER -->
+  <div id="tool" class="panel active">
+    <div class="grid">
+      <div class="box">
+        <h2>Hotspot Parameter Input</h2>
+        <div>
+          <button type="button" class="preset-btn" data-preset="tc1">TC-01: Open Hotspot</button>
+          <button type="button" class="preset-btn" data-preset="tc2">TC-02: WPA2 + VPN</button>
+          <button type="button" class="preset-btn" data-preset="tc3">TC-03: WPA3 Safe</button>
+          <button type="button" class="preset-btn" data-preset="tc4">TC-04: Duplicate SSID</button>
+        </div>
+
+        <label for="ssid">Network Name (SSID)</label>
+        <input type="text" id="ssid" placeholder="e.g., Public_WiFi_Zone" />
+
+        <label for="enc">Encryption Protocol</label>
+        <select id="enc">
+          <option value="">-- Choose Encryption --</option>
+          <option value="OPEN">Open (Unencrypted)</option>
+          <option value="WEP">WEP (Legacy Weak)</option>
+          <option value="WPA2">WPA2-PSK</option>
+          <option value="WPA3">WPA3-SAE</option>
+        </select>
+
+        <label for="act">Planned Activity</label>
+        <select id="act">
+          <option value="browse">General Browsing</option>
+          <option value="login">Email / Social Login</option>
+          <option value="bank">Banking / Online Payment</option>
+        </select>
+
+        <div class="checks">
+          <label><input type="checkbox" id="vpn" /> VPN Tunnel Enabled</label>
+          <label><input type="checkbox" id="https" /> HTTPS-Only &amp; Firewall Active</label>
+          <label><input type="checkbox" id="evil" /> Duplicate / Suspicious SSID Observed</label>
+          <label><input type="checkbox" id="share" /> Auto-Connect or File Sharing Enabled</label>
+        </div>
+
+        <button type="button" class="action-btn" id="evalBtn">Evaluate Safety</button>
+        <button type="button" class="secondary-btn" id="clearBtn">Clear</button>
+      </div>
+
+      <div class="box">
+        <h2>Risk Assessment Result</h2>
+        <div class="score-box">
+          <div id="scoreText">--</div>
+          <div id="riskText" style="font-weight:bold; margin-top:4px;">Waiting for Input</div>
+          <div id="msgText" style="font-size:13px; color:#94a3b8; margin-top:4px;">Safe local evaluation only. No external network scanning is performed.</div>
+        </div>
+        <h3>Findings &amp; Safe Actions</h3>
+        <ul id="tipsList">
+          <li>Select a test preset (TC-01 to TC-04) or enter fields to test.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: FULL PROJECT OVERVIEW & DESIGN -->
+  <div id="about" class="panel">
+    <div class="box">
+      <h2>Cover Details &amp; Certificate</h2>
+      <p><strong>Project Title:</strong> Public Wi-Fi Safety<br>
+      <strong>Student Name:</strong> Nikunj Kumar Lodhi | <strong>Roll Number:</strong> 2026b02310083 | <strong>Class / Section:</strong> ELCE 2<br>
+      <strong>Email:</strong> nikunj.26b02310083@abes.ac.in | <strong>Career Shaper Username:</strong> nikunj.26b02310083@abes.ac.in<br>
+      <strong>Trainer / Faculty Name:</strong> Mr.Pushpraj | <strong>Submission Date:</strong> 20/11/2026</p>
+      <p><strong>Certificate / Declaration:</strong> This project on Public Wi-Fi Safety was completed individually in safe lab mode following all guidelines, and all external references and tools used are acknowledged.</p>
+    </div>
+
+    <div class="box">
+      <h2>Project Summary</h2>
+      <p>Public Wi-Fi Safety is an educational web application built to help users evaluate security risks on public or open wireless networks using simulated parameters. People frequently connect to free Wi-Fi hotspots at stations, cafes, and public places without checking encryption strength, duplicate SSID indicators, VPN protection, or sharing settings. This project calculates a clear safety score, highlights potential risks, and provides safe-use guidance without scanning or attacking any live public or institutional network.</p>
+    </div>
+
+    <div class="box">
+      <h2>Problem Statement &amp; Objectives</h2>
+      <p><strong>Problem Statement:</strong> Public Wi-Fi networks often lack strong encryption or rely on shared passwords, exposing user traffic to eavesdropping, rogue access points, or unauthorized access through enabled file sharing. Beginners often do not know how to judge whether a hotspot is safe for logins or payments.</p>
+      <h3>Objectives</h3>
+      <ol>
+        <li><strong>Design</strong> a clean interface to enter simulated Wi-Fi settings and view a safety score.</li>
+        <li><strong>Build</strong> scoring logic based on encryption type, VPN status, HTTPS/firewall flags, and sharing settings.</li>
+        <li><strong>Demonstrate</strong> core networking and security ideas including wireless encryption, Evil Twin risks, and OS sharing hygiene.</li>
+        <li><strong>Test</strong> sample Wi-Fi cases covering high risk, protected networks, and duplicate SSIDs.</li>
+        <li><strong>Document</strong> safe Wi-Fi habits, system design, and submission details.</li>
+      </ol>
+    </div>
+
+    <div class="box">
+      <h2>Scope, Concepts, Tools &amp; System Design</h2>
+      <p><strong>Scope &amp; Limitations:</strong> Covers simulated parameter checks and safety advice. Does not capture live packets, scan external networks, or launch attacks.</p>
+      <p><strong>Concepts Used:</strong> Wireless encryption (Open, WEP, WPA2, WPA3), Evil Twin / MITM awareness, VPN and HTTPS protection, and OS file-sharing/firewall hygiene.</p>
+      <p><strong>Tools &amp; Technologies:</strong> VS Code, HTML5, CSS3, JavaScript, and a modern web browser.</p>
+      <p><strong>System Design:</strong> Input Form &amp; Presets -&gt; Validation &amp; Score Calculation -&gt; Risk Verdict &amp; Recommendations.</p>
+    </div>
+  </div>
+
+  <!-- TAB 3: README -->
+  <div id="readme" class="panel">
+    <div class="box">
+      <h2>Submission Folder &amp; README</h2>
+      <p><strong>Submission Folder Name:</strong> <code>2026b02310083_NikunjKumarLodhi_PublicWiFiSafety</code></p>
+      <pre>Project Title: Public Wi-Fi Safety
+Student Name: Nikunj Kumar Lodhi
+Roll Number: 2026b02310083
+Class / Section: ELCE 2
+Email: nikunj.26b02310083@abes.ac.in
+Career Shaper Username: nikunj.26b02310083@abes.ac.in
+Trainer / Faculty: Mr.Pushpraj
+Submission Date: 20/11/2026</pre>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tabBtns = document.querySelectorAll(".tab-btn");
+    var panels = document.querySelectorAll(".panel");
+    for (var i = 0; i < tabBtns.length; i++) {
+      tabBtns[i].addEventListener("click", function () {
+        var targetId = this.getAttribute("data-tab");
+        for (var j = 0; j < tabBtns.length; j++) tabBtns[j].classList.remove("active");
+        for (var k = 0; k < panels.length; k++) panels[k].classList.remove("active");
+        this.classList.add("active");
+        document.getElementById(targetId).classList.add("active");
+      });
+    }
+
+    var presetBtns = document.querySelectorAll(".preset-btn");
+    for (var p = 0; p < presetBtns.length; p++) {
+      presetBtns[p].addEventListener("click", function () {
+        setPreset(this.getAttribute("data-preset"));
+      });
+    }
+
+    document.getElementById("evalBtn").addEventListener("click", checkSafety);
+    document.getElementById("clearBtn").addEventListener("click", clearForm);
+  });
+
+  function setPreset(tc) {
+    var ssid = document.getElementById("ssid");
+    var enc = document.getElementById("enc");
+    var act = document.getElementById("act");
+    var vpn = document.getElementById("vpn");
+    var https = document.getElementById("https");
+    var evil = document.getElementById("evil");
+    var share = document.getElementById("share");
+
+    if (tc === "tc1") {
+      ssid.value = "Free_Station_WiFi"; enc.value = "OPEN"; act.value = "bank";
+      vpn.checked = false; https.checked = false; evil.checked = false; share.checked = true;
+    } else if (tc === "tc2") {
+      ssid.value = "Cafe_Guest_Net"; enc.value = "WPA2"; act.value = "login";
+      vpn.checked = true; https.checked = true; evil.checked = false; share.checked = false;
+    } else if (tc === "tc3") {
+      ssid.value = "Campus_Library_WiFi"; enc.value = "WPA3"; act.value = "browse";
+      vpn.checked = true; https.checked = true; evil.checked = false; share.checked = false;
+    } else if (tc === "tc4") {
+      ssid.value = "Public_Spot_WiFi"; enc.value = "OPEN"; act.value = "login";
+      vpn.checked = false; https.checked = true; evil.checked = true; share.checked = false;
+    }
+    checkSafety();
+  }
+
+  function checkSafety() {
+    var name = document.getElementById("ssid").value.trim();
+    var type = document.getElementById("enc").value;
+    var act = document.getElementById("act").value;
+    var vpn = document.getElementById("vpn").checked;
+    var https = document.getElementById("https").checked;
+    var evil = document.getElementById("evil").checked;
+    var share = document.getElementById("share").checked;
+
+    var scoreText = document.getElementById("scoreText");
+    var riskText = document.getElementById("riskText");
+    var msgText = document.getElementById("msgText");
+    var tipsList = document.getElementById("tipsList");
+
+    if (name === "" || type === "") {
+      scoreText.textContent = "ERR";
+      riskText.textContent = "Incomplete Input";
+      msgText.textContent = "Please enter SSID and select an Encryption Protocol.";
+      tipsList.innerHTML = "<li>Validation Alert: SSID and Encryption fields cannot be empty.</li>";
+      return;
+    }
+
+    var score = 100;
+    var tips = [];
+
+    if (type === "OPEN") { score -= 40; tips.push("OPEN Network: Traffic is unencrypted and vulnerable to local sniffing."); }
+    if (type === "WEP") { score -= 35; tips.push("WEP Encryption: Outdated security standard; avoid using."); }
+    if (type === "WPA2") { score -= 10; tips.push("WPA2-PSK: Moderate security; avoid sensitive tasks on shared public passwords."); }
+    if (type === "WPA3") { tips.push("WPA3-SAE: Strong modern wireless encryption."); }
+
+    if (evil) { score -= 30; tips.push("Duplicate / Suspicious SSID: Possible Evil Twin hotspot; verify official network name."); }
+    if (vpn) { score += 10; tips.push("VPN Active: Encrypted tunnel adds protection over public Wi-Fi."); }
+    else { score -= 20; tips.push("VPN Off: Local network can observe unencrypted traffic/metadata."); }
+    if (!https) { score -= 10; tips.push("HTTPS-Only Off: Enable HTTPS-Only mode and firewall protection."); }
+    if (share) { score -= 10; tips.push("Auto-Connect / Sharing ON: Turn off file sharing and auto-join on public networks."); }
+    if (act === "bank" && (type === "OPEN" || !vpn)) {
+      score -= 15;
+      tips.push("High-Risk Activity: Do not do banking/payments on unprotected Wi-Fi; use mobile data.");
+    }
+
+    if (score < 0) score = 0;
+    if (score > 100) score = 100;
+
+    scoreText.textContent = score + "%";
+    var level = "HIGH RISK";
+    if (score >= 75) { level = "LOW RISK"; msgText.textContent = '"' + name + '" has safer settings under the selected conditions.'; }
+    else if (score >= 45) { level = "MODERATE RISK"; msgText.textContent = 'Proceed carefully on "' + name + '" and avoid sensitive logins.'; }
+    else { msgText.textContent = '"' + name + '" is risky. Disconnect or use mobile data.'; }
+
+    riskText.textContent = level;
+    tipsList.innerHTML = tips.map(function (t) { return "<li>" + t + "</li>"; }).join("");
+  }
+
+  function clearForm() {
+    document.getElementById("ssid").value = "";
+    document.getElementById("enc").value = "";
+    document.getElementById("act").value = "browse";
+    document.getElementById("vpn").checked = false;
+    document.getElementById("https").checked = false;
+    document.getElementById("evil").checked = false;
+    document.getElementById("share").checked = false;
+    document.getElementById("scoreText").textContent = "--";
+    document.getElementById("riskText").textContent = "Waiting for Input";
+    document.getElementById("msgText").textContent = "Safe local evaluation only. No external network scanning is performed.";
+    document.getElementById("tipsList").innerHTML = "<li>Select a test preset (TC-01 to TC-04) or enter fields to test.</li>";
+  }
+</script>
+</body>
+</html>
